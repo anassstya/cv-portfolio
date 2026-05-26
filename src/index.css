@@ -1,0 +1,181 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Archivo+Black&display=swap');
+
+:root {
+  --bg: #09090b;
+  --bg-card: #0e0e12;
+  --bg-card-hover: #141420;
+  --accent: #c8a86a;
+  --accent-glow: rgba(200, 168, 106, 0.12);
+  --accent-border: rgba(200, 168, 106, 0.28);
+  --text: #f0f0ee;
+  --text-muted: #64646e;
+  --text-dim: #9898a6;
+  --border: rgba(255, 255, 255, 0.06);
+  --border-light: rgba(255, 255, 255, 0.1);
+  --radius: 14px;
+  --radius-sm: 8px;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+}
+
+ul {
+  list-style: none;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: #222228; border-radius: 4px; }
+
+/* Section */
+.section {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 90px 24px;
+}
+
+.section-title {
+  font-size: clamp(1.5rem, 3vw, 2.1rem);
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 52px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  letter-spacing: -0.5px;
+}
+
+.section-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, var(--border-light), transparent);
+  max-width: 220px;
+}
+
+.accent { color: var(--accent); }
+
+/* Responsive 2-col about grid */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: start;
+}
+
+/* Nav (desktop only) */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+@media (max-width: 768px) {
+  .section { padding: 64px 20px; }
+  .about-grid { grid-template-columns: 1fr; gap: 40px; }
+  .nav-links { display: none; }
+  .hero-buttons { flex-direction: column; }
+}
+
+/* ───── Hero display text ───── */
+.hero-display {
+  font-family: 'Archivo Black', 'Inter', sans-serif;
+  font-weight: 900;
+  text-transform: uppercase;
+  line-height: 0.92;
+  letter-spacing: -0.025em;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/* Hollow letter — outline, fills on hover */
+.hollow-letter {
+  display: inline-block;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.3);
+  paint-order: stroke fill;
+  transition: color 0.25s ease, -webkit-text-stroke-color 0.25s ease, transform 0.25s ease;
+  cursor: default;
+}
+
+.hollow-letter:hover {
+  color: var(--accent);
+  -webkit-text-stroke-color: var(--accent);
+  transform: translateY(-4px);
+}
+
+/* Smoke blobs */
+@keyframes smokeFloat1 {
+  0%, 100% { transform: translate(-15%, -10%) scale(1); }
+  33%      { transform: translate(15%, 10%) scale(1.15); }
+  66%      { transform: translate(-5%, 20%) scale(0.9); }
+}
+@keyframes smokeFloat2 {
+  0%, 100% { transform: translate(20%, 15%) scale(1.1); }
+  50%      { transform: translate(-20%, -10%) scale(0.85); }
+}
+@keyframes smokeFloat3 {
+  0%, 100% { transform: translate(0%, 5%) scale(1); }
+  50%      { transform: translate(10%, -15%) scale(1.2); }
+}
+
+.smoke-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  mix-blend-mode: screen;
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* Hide carousel scrollbar but keep scrollable */
+.carousel-track::-webkit-scrollbar { display: none; }
+.carousel-track { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Pinterest-style projects layout */
+.projects-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-items: stretch;
+}
+
+.projects-left {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  gap: 20px;
+}
+
+@media (max-width: 860px) {
+  .projects-grid { grid-template-columns: 1fr; }
+}
