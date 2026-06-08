@@ -4,7 +4,6 @@ import { useLang } from '../context/LangContext'
 
 interface Skill {
   name: string
-  level: number
   color: string
   iconType: 'img' | 'svg'
   iconSrc?: string
@@ -40,105 +39,76 @@ const algoSvg = (
   </svg>
 )
 
+const clickhouseSvg = (
+  <svg viewBox="0 0 24 24" width="32" height="32" fill="#ffcc00">
+    <rect x="2" y="4" width="3.2" height="16" rx="0.5"/>
+    <rect x="7" y="4" width="3.2" height="16" rx="0.5"/>
+    <rect x="12" y="4" width="3.2" height="16" rx="0.5"/>
+    <rect x="17" y="4" width="3.2" height="10.5" rx="0.5"/>
+    <rect x="17" y="16.8" width="3.2" height="3.2" rx="0.5"/>
+  </svg>
+)
+
 const skills: Skill[] = [
-  { name: 'Go',                level: 70, color: '#00ACD7', iconType: 'img', iconSrc: '/icons/go.png' },
-  { name: 'PostgreSQL',        level: 50, color: '#6fa8d6', iconType: 'img', iconSrc: '/icons/postgres.png' },
-  { name: 'Docker',            level: 60, color: '#0db7ed', iconType: 'svg', iconSvg: dockerSvg },
-  { name: 'Redis',             level: 40, color: '#dc382d', iconType: 'img', iconSrc: '/icons/redis.png' },
-  { name: 'Swagger',           level: 45, color: '#85ea2d', iconType: 'img', iconSrc: '/icons/swagger.png' },
-  { name: 'REST API',          level: 68, color: '#79c0ff', iconType: 'svg', iconSvg: restApiSvg },
-  { name: 'gRPC',              level: 45, color: '#a78bfa', iconType: 'svg', iconSvg: grpcSvg },
-  { name: 'Алгоритмы и СД',     level: 42, color: '#fb923c', iconType: 'svg', iconSvg: algoSvg },
+  { name: 'Go',              color: '#00ACD7', iconType: 'img', iconSrc: '/icons/go.png' },
+  { name: 'PostgreSQL',      color: '#6fa8d6', iconType: 'img', iconSrc: '/icons/postgres.png' },
+  { name: 'Docker',          color: '#0db7ed', iconType: 'svg', iconSvg: dockerSvg },
+  { name: 'Redis',           color: '#dc382d', iconType: 'img', iconSrc: '/icons/redis.png' },
+  { name: 'ClickHouse',      color: '#ffcc00', iconType: 'svg', iconSvg: clickhouseSvg },
+  { name: 'Swagger',         color: '#85ea2d', iconType: 'img', iconSrc: '/icons/swagger.png' },
+  { name: 'REST API',        color: '#79c0ff', iconType: 'svg', iconSvg: restApiSvg },
+  { name: 'gRPC',            color: '#a78bfa', iconType: 'svg', iconSvg: grpcSvg },
+  { name: 'Алгоритмы и СД',  color: '#fb923c', iconType: 'svg', iconSvg: algoSvg },
 ]
 
-function SkillBar({ skill, index, inView }: { skill: Skill; index: number; inView: boolean }) {
+function SkillCard({ skill, index, inView }: { skill: Skill; index: number; inView: boolean }) {
   return (
     <motion.div
-      initial={{ opacity: 0, x: -20 }}
-      animate={inView ? { opacity: 1, x: 0 } : {}}
-      transition={{ duration: 0.5, delay: index * 0.07 }}
+      initial={{ opacity: 0, y: 20 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.5, delay: index * 0.06 }}
+      whileHover={{
+        y: -4,
+        borderColor: `${skill.color}66`,
+        boxShadow: `0 10px 30px ${skill.color}1a`,
+      }}
       style={{
-        display: 'grid',
-        gridTemplateColumns: '200px 1fr 50px',
-        gap: 24,
+        display: 'flex',
+        flexDirection: 'column',
         alignItems: 'center',
-        padding: '18px 0',
-        borderBottom: '1px solid var(--border)',
+        gap: 14,
+        padding: '30px 18px',
+        borderRadius: 14,
+        border: '1px solid var(--border)',
+        background: 'rgba(255,255,255,0.02)',
+        cursor: 'default',
       }}
     >
-      {/* Name + Icon */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-        <div style={{
-          flexShrink: 0,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          width: 44,
-          height: 44,
-        }}>
-          {skill.iconType === 'img' ? (
-            <img
-              src={skill.iconSrc}
-              alt={skill.name}
-              style={{
-                width: '100%',
-                height: '100%',
-                objectFit: 'contain',
-              }}
-            />
-          ) : skill.iconSvg}
-        </div>
-        <span style={{ fontSize: 15, fontWeight: 600, color: 'var(--text)' }}>
-          {skill.name}
-        </span>
-      </div>
-
-      {/* Bar with centered ball */}
-      <div style={{ position: 'relative', height: 22, display: 'flex', alignItems: 'center' }}>
-        {/* Track */}
-        <div style={{
-          position: 'absolute', left: 0, right: 0, height: 6,
-          background: 'rgba(255,255,255,0.06)',
-          borderRadius: 100,
-        }} />
-        {/* Filled */}
-        <motion.div
-          initial={{ width: 0 }}
-          animate={inView ? { width: `${skill.level}%` } : {}}
-          transition={{ duration: 1.1, delay: index * 0.07 + 0.2, ease: [0.16, 1, 0.3, 1] }}
-          style={{
-            position: 'absolute', left: 0, top: '50%',
-            transform: 'translateY(-50%)',
-            height: 6,
-            background: `linear-gradient(to right, ${skill.color}55, ${skill.color})`,
-            borderRadius: 100,
-          }}
-        />
-        {/* Ball — precisely centered on bar end */}
-        <motion.div
-          initial={{ left: '0%', opacity: 0 }}
-          animate={inView ? { left: `${skill.level}%`, opacity: 1 } : {}}
-          transition={{ duration: 1.1, delay: index * 0.07 + 0.2, ease: [0.16, 1, 0.3, 1] }}
-          style={{
-            position: 'absolute',
-            top: '50%',
-            width: 16,
-            height: 16,
-            background: skill.color,
-            borderRadius: '50%',
-            boxShadow: `0 0 0 4px var(--bg), 0 0 14px ${skill.color}80`,
-            transform: 'translate(-50%, -50%)',
-          }}
-        />
-      </div>
-
-      {/* Percent */}
-      <span style={{
-        fontSize: 14, fontWeight: 700,
-        color: skill.color, textAlign: 'right',
-        fontVariantNumeric: 'tabular-nums',
+      {/* Icon */}
+      <div style={{
+        width: 44,
+        height: 44,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
       }}>
-        {skill.level}%
+        {skill.iconType === 'img' ? (
+          <img
+            src={skill.iconSrc}
+            alt={skill.name}
+            style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+          />
+        ) : skill.iconSvg}
+      </div>
+
+      {/* Name */}
+      <span style={{
+        fontSize: 15,
+        fontWeight: 600,
+        color: 'var(--text)',
+        textAlign: 'center',
+      }}>
+        {skill.name}
       </span>
     </motion.div>
   )
@@ -170,9 +140,13 @@ export default function Skills() {
           {t.skills.title}
         </motion.h2>
 
-        <div>
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))',
+          gap: 16,
+        }}>
           {skills.map((s, i) => (
-            <SkillBar key={s.name} skill={s} index={i} inView={inView} />
+            <SkillCard key={s.name} skill={s} index={i} inView={inView} />
           ))}
         </div>
       </div>

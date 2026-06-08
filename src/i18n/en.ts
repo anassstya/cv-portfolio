@@ -43,7 +43,7 @@ export const en = {
       {
         company: 'ExatHomes',
         role: 'Fullstack Developer',
-        period: '~6 months',
+        period: '~1 year',
         items: [
           'Worked at an American real estate startup. The primary focus was frontend development, but I also took on backend tasks when needed',
           'Built adaptive React interfaces: developed new pages, created reusable components with hooks (useState, useEffect), optimized rendering and ensured cross-browser compatibility',

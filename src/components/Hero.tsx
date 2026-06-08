@@ -1,5 +1,5 @@
 import { motion, useScroll, useTransform } from 'framer-motion'
-import { useRef } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { Mail } from 'lucide-react'
 import { useLang } from '../context/LangContext'
 
@@ -25,6 +25,15 @@ function HollowWord({ word, size }: { word: string; size: string }) {
 export default function Hero() {
   const { t } = useLang()
   const ref = useRef<HTMLElement>(null)
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth <= 768)
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] })
   const fadeOut = useTransform(scrollYProgress, [0, 0.5], [1, 0])
   const slideUp = useTransform(scrollYProgress, [0, 0.5], ['0px', '-40px'])
@@ -84,7 +93,7 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
         >
-          <HollowWord word="BACKEND" size="clamp(3.5rem, 11vw, 10rem)" />
+          <HollowWord word="BACKEND" size={isMobile ? 'clamp(2.2rem, 13vw, 3.5rem)' : 'clamp(3.5rem, 11vw, 10rem)'} />
         </motion.div>
 
         {/* DEVELOPER — hollow, hoverable */}
@@ -93,7 +102,7 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
         >
-          <HollowWord word="DEVELOPER" size="clamp(3.5rem, 11vw, 10rem)" />
+          <HollowWord word="DEVELOPER" size={isMobile ? 'clamp(1.7rem, 10vw, 3.5rem)' : 'clamp(3.5rem, 11vw, 10rem)'} />
         </motion.div>
 
         {/* Анастасия Ачкасова — yellow, smaller */}
@@ -146,17 +155,26 @@ export default function Hero() {
         </p>
 
         {/* CTA buttons */}
-        <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', flexShrink: 0 }}>
+        <div style={{
+          display: 'flex',
+          gap: 12,
+          flexWrap: 'wrap',
+          flexShrink: 0,
+          width: isMobile ? '100%' : 'auto',
+        }}>
           <motion.a
             href="#projects"
             whileHover={{ backgroundColor: 'var(--text)', color: '#09090b' }}
             whileTap={{ scale: 0.96 }}
             style={{
-              padding: '14px 28px',
+              padding: isMobile ? '13px 20px' : '14px 28px',
               background: 'var(--accent)', color: '#09090b',
-              fontWeight: 700, fontSize: 15, borderRadius: 8,
+              fontWeight: 700, fontSize: isMobile ? 14 : 15, borderRadius: 8,
               transition: 'background 0.2s, color 0.2s',
               letterSpacing: 0.3, whiteSpace: 'nowrap',
+              flex: isMobile ? '1 1 0' : '0 0 auto',
+              textAlign: 'center',
+              justifyContent: 'center',
             }}
           >
             {t.hero.cta}
@@ -165,12 +183,14 @@ export default function Hero() {
             href="mailto:a.nasstya@mail.ru"
             whileHover={{ borderColor: 'rgba(255,255,255,0.3)', color: 'var(--text)' }}
             style={{
-              padding: '14px 28px',
+              padding: isMobile ? '13px 20px' : '14px 28px',
               border: '1px solid var(--border-light)', color: 'var(--text-dim)',
-              fontWeight: 600, fontSize: 15, borderRadius: 8,
+              fontWeight: 600, fontSize: isMobile ? 14 : 15, borderRadius: 8,
               transition: 'border-color 0.2s, color 0.2s',
               display: 'flex', alignItems: 'center', gap: 8,
               whiteSpace: 'nowrap',
+              flex: isMobile ? '1 1 0' : '0 0 auto',
+              justifyContent: 'center',
             }}
           >
             <Mail size={15} />
