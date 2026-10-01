@@ -41,15 +41,27 @@ export const en = {
     title: 'Work Experience',
     jobs: [
       {
+        company: 'Ozon Tech',
+        role: 'QA / Backend Developer',
+        period: 'June 2026 — Present · ~4 months',
+        items: [
+          'Test interactions between services, including gRPC scenarios',
+          'Analyze errors and verify new functionality',
+          'Contribute to backend service development: implement new gRPC endpoints and refine existing logic',
+          'Fix defects and participate in code reviews',
+        ],
+      },
+      {
         company: 'ExatHomes',
         role: 'Fullstack Developer',
-        period: '~1 year',
+        period: 'June 2025 — December 2025 · ~7 months',
         items: [
-          'Worked at an American real estate startup. The primary focus was frontend development, but I also took on backend tasks when needed',
-          'Built adaptive React interfaces: developed new pages, created reusable components with hooks (useState, useEffect), optimized rendering and ensured cross-browser compatibility',
-          'Diagnosed and fixed frontend bugs: debugging, refactoring problematic code, improving UX and interface performance',
-          'Integrated CRM systems and third-party APIs, worked with forms, validation, and application state',
-          'Backend tasks in Go: implemented REST API endpoints, set up request validation and PostgreSQL integration',
+          'Worked at an American real estate startup',
+          'Built and refined responsive website interfaces',
+          'Created reusable components and handled various UI states',
+          'Worked with CRM systems and helped configure interactions between different parts of the product',
+          'Identified and fixed frontend bugs, debugged issues, and improved existing functionality',
+          'Worked with forms, validation, user flows, and interface states',
         ],
       },
     ],

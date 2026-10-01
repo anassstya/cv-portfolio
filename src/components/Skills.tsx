@@ -51,11 +51,14 @@ const clickhouseSvg = (
 
 const skills: Skill[] = [
   { name: 'Go',              color: '#00ACD7', iconType: 'img', iconSrc: '/icons/go.png' },
-  { name: 'PostgreSQL',      color: '#6fa8d6', iconType: 'img', iconSrc: '/icons/postgres.png' },
+  { name: 'PostgreSQL',      color: '#6fa8d6', iconType: 'img', iconSrc: '/icons/postgres.svg' },
+  { name: 'Nginx',           color: '#009639', iconType: 'img', iconSrc: '/icons/nginx.svg' },
   { name: 'Docker',          color: '#0db7ed', iconType: 'svg', iconSvg: dockerSvg },
-  { name: 'Redis',           color: '#dc382d', iconType: 'img', iconSrc: '/icons/redis.png' },
+  { name: 'Redis',           color: '#dc382d', iconType: 'img', iconSrc: '/icons/redis.svg' },
   { name: 'ClickHouse',      color: '#ffcc00', iconType: 'svg', iconSvg: clickhouseSvg },
-  { name: 'Swagger',         color: '#85ea2d', iconType: 'img', iconSrc: '/icons/swagger.png' },
+  { name: 'Swagger',         color: '#85ea2d', iconType: 'img', iconSrc: '/icons/swagger.svg' },
+  { name: 'Grafana',         color: '#f46800', iconType: 'img', iconSrc: '/icons/grafana.svg' },
+  { name: 'Git',             color: '#f05032', iconType: 'img', iconSrc: '/icons/git.svg' },
   { name: 'REST API',        color: '#79c0ff', iconType: 'svg', iconSvg: restApiSvg },
   { name: 'gRPC',            color: '#a78bfa', iconType: 'svg', iconSvg: grpcSvg },
   { name: 'Алгоритмы и СД',  color: '#fb923c', iconType: 'svg', iconSvg: algoSvg },
@@ -96,7 +99,11 @@ function SkillCard({ skill, index, inView }: { skill: Skill; index: number; inVi
           <img
             src={skill.iconSrc}
             alt={skill.name}
-            style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'contain',
+            }}
           />
         ) : skill.iconSvg}
       </div>
